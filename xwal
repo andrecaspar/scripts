@@ -1,0 +1,15 @@
+#!/bin/bash
+
+wal --backend
+
+if [ "$#" -gt 1 ]; then
+    wal -n --backend $2 -i $1
+else
+    wal -n -i $1
+fi
+
+cp ~/.cache/wal/Xresources ~/.Xresources
+cp ~/.cache/wal/alacritty.yml ~/.config/alacritty/alacritty.yml
+cp $1 ~/Pictures/Wallpapers/wallpaper
+xrdb ~/.Xresources
+feh --bg-scale ~/Pictures/Wallpapers/wallpaper

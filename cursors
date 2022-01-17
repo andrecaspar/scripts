@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ "$#" -gt 0 ]; then
+    cd ~/Downloads
+    if [[ $1 == *.tar* ]]; then
+        tar -xf $1
+    else
+        7z x $1
+    fi
+    doas mv $(ls -td */ | head -n 1) /usr/share/icons/
+else
+    array=()
+    cd /usr/share/icons
+    for cursor in $(find . -type d -name cursors);
+        do array+=( $(echo $cursor | sed 's/cursors$/index.theme/g' | xargs grep Name | awk -F= '{ print $NF }' | sed 's/ //g') );
+    done
+    selected=$(echo ${array[@]} | sed 's/ /\n/g' | dmenu -l 10)
+    if [ "$selected" == "" ]; then
+        exit
+    fi
+    sed -i "s/Xcursor\.theme.*/Xcursor.theme: $selected/g" ~/.Xresources
+    sed -i "s/Xcursor\.theme.*/Xcursor.theme: $selected/g" ~/.config/wal/templates/Xresources
+    sed -i "s/gtk-cursor-theme-name.*/gtk-cursor-theme-name=$selected/g" ~/.config/gtk-3.0/settings.ini
+fi

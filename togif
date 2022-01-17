@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ffmpeg -i $1 -vf palettegen palette.png
+ffmpeg -i $1 -i palette.png -lavfi paletteuse output.gif
+rm palette.png

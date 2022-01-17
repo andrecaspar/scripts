@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo level $(echo -e '7\nauto\nfull-speed' | rofi -dmenu -p "Choose fan configuration:") | doas tee /proc/acpi/ibm/fan
