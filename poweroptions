@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo $(echo -e 'poweroff\nreboot' | rofi -dmenu -p "Choose power option:") | xargs doas
